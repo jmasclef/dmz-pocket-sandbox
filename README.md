@@ -9,6 +9,9 @@ This implies to push and probe cutting-edge local AI stacks — inference wrappe
 But sending prompts, chats, or uploaded files into opaque local solutions without knowing what they persist, where they persist it, or what telemetry they phone home is reckless.
 Worse: a seemingly benign Python dependency or an automatic update can introduce data-exfiltration behavior or even ship malware — supply-chain and trojanized packages are real risks.
 Treat every new library (and its updates) as untrusted.
+![Uploading dmz-pocket-sandbox.png…]()
+
+
 
 # Description
 The architecture consists of two services: sandbox-myapp (the application you want to sandbox) and sandbox-proxy (the reverse proxy), with the proxy routing traffic from/to the app via sandbox-myapp:8080. Networking is split into two networks: `isolated_net` for internal communication between the app and proxy, and `internet_net` for external access to the proxy through port 8080. In this setup the application is isolated, it cannot talk directly to the internet so your app cannot directly exfiltrate.
