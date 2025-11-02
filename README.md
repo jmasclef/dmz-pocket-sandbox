@@ -1,8 +1,9 @@
 # DMZ Pocket Sandbox
-How to test new “local AI” libraries without bleeding your data ?
-Share this quick and easy docker micro infrastructure for strong network isolation and controlled service exposure: ideal for zero trust LLM and application sandboxing.
+**How to test new “local AI” libraries without bleeding your data ?**
 
-This is literally a 40-line security upgrade with a simple “internet switch” that everyone should know and use.
+Share this quick and easy docker micro infrastructure for strong network isolation and controlled service exposure: ideal for **zero trust LLM** and **immediate application sandboxing**.
+
+This is literally a 40-line **security upgrade** with a simple “internet switch” that **everyone should know** and use.
 
 # Context
 Companies and engineers want the shiny new LLM toys.
@@ -16,6 +17,7 @@ Treat every new library (and its updates) as untrusted.
 # Description
 The architecture consists of two wired services: sandbox-myapp (the application you want to sandbox) and sandbox-proxy (pre-configured Caddy as reverse proxy), with the proxy routing traffic from/to the app via sandbox-myapp:8080. Networking is split into two networks: `isolated_net` for internal communication between the app and proxy, and `internet_net` for external access to the proxy through port 8080. In this setup the application is isolated, it cannot talk directly to the internet so your app cannot directly exfiltrate. 
 Adding and removing `internet_net` from sandbox-myapp networks act as the “internet switch”; so you can enable and disable access to Internet.  
+This Docker DMZ proxy pattern permits to plug an existing Dockerfile into an isolated environment, making secured tests and deployments quick and easy.    
 
 # But... Wait...
 You just asked to ChatGPT and its response was you just have to set the network as internal.  
@@ -106,4 +108,3 @@ Before changing image or connect to internet to download other models, plugins, 
 - destruct the existing container
 - remove or move volumes during internet connection
 - rebuild infra
-
