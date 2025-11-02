@@ -13,7 +13,13 @@ Treat every new library (and its updates) as untrusted.
 ![Alt text](dmz-pocket-sandbox_medium.png)
 
 # Description
-The architecture consists of two services: sandbox-myapp (the application you want to sandbox) and sandbox-proxy (the reverse proxy), with the proxy routing traffic from/to the app via sandbox-myapp:8080. Networking is split into two networks: `isolated_net` for internal communication between the app and proxy, and `internet_net` for external access to the proxy through port 8080. In this setup the application is isolated, it cannot talk directly to the internet so your app cannot directly exfiltrate.
+The architecture consists of two wired services: sandbox-myapp (the application you want to sandbox) and sandbox-proxy (pre-configured Caddy as reverse proxy), with the proxy routing traffic from/to the app via sandbox-myapp:8080. Networking is split into two networks: `isolated_net` for internal communication between the app and proxy, and `internet_net` for external access to the proxy through port 8080. In this setup the application is isolated, it cannot talk directly to the internet so your app cannot directly exfiltrate. 
+Adding and removing `internet_net` from sandbox-myapp networks act as the “internet switch”; so you can enable and disable access to Internet.  
+
+# But... Wait...
+You just asked to ChatGPT and its response was you just have to set the network as internal.  
+Test it. You can't access from host navigator ?  
+ChatGPT always have a response but not always a solution.  
 
 # Files hierarchy  
 ├── proxy/  
@@ -91,6 +97,7 @@ Now test the app, download the models, set up the details and validate functiona
 ## Disable internet and use 
 - edit docker-compose.yml: in networks section of the sandbox-myapp service, remove internet_net; there must be only isolated_net in the networks section of the sandbox-myapp service
 - restart services with docker-compose down && docker-compose up
+
 **NOW YOUR APP CONTAINER CAN NOT REACH INTERNET, THE APP CONTAINER CAN NOT EXFILTRATE**
 
 ## Need to redo ? change models ?
