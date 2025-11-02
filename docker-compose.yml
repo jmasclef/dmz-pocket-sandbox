@@ -1,0 +1,35 @@
+services:
+  sandbox-myapp:
+    build:
+      context: ./myapp
+      dockerfile: Dockerfile
+    container_name: sandbox-myapp
+    volumes:
+      - ./myapp/app_data:/app/data
+    networks:
+      - isolated_net
+    expose:
+      - "8080"
+
+  sandbox-proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    container_name: sandbox-proxy
+    depends_on:
+      - sandbox-myapp
+    ports:
+      - "8080:8080"          # only proxy publishes this to host
+    networks:
+      - isolated_net         # so proxy can reach the app internally
+      - internet_net         # so proxy can be reached from host/bridge
+
+networks:
+  # isolated_net is internal to Docker (no external container routing)
+  isolated_net:
+    internal: true
+    attachable: true
+
+  # external network that is routable by the host (bridge default)
+  internet_net:
+    internal: false
