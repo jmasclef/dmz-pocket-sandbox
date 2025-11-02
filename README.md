@@ -1,4 +1,5 @@
-# How to test new “local AI” libraries without bleeding your data ?
+# DMZ Pocket Sandbox
+How to test new “local AI” libraries without bleeding your data ?
 Share this quick and easy docker micro infrastructure for strong network isolation and controlled service exposure: ideal for zero trust LLM and application sandboxing.
 
 This is literally a 20-line security upgrade with a simple “internet switch” that everyone should know and use.
